@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wavelink Intercom — Mac App Releases</title>
+<meta name="description" content="Signed, notarized builds of Wavelink Mac, the Wavelink Intercom app for macOS.">
+<style>
+  :root {
+    --bg: #0d1117; --panel: #161b22; --line: #262d36;
+    --fg: #e6edf3; --dim: #8b949e; --accent: #4fb3ff;
+  }
+  @media (prefers-color-scheme: light) {
+    :root { --bg: #fff; --panel: #f6f8fa; --line: #d8dee4;
+            --fg: #1f2328; --dim: #59636e; --accent: #0a66c2; }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 0 20px 80px;
+    background: var(--bg); color: var(--fg);
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 720px; margin: 0 auto; }
+  header { padding: 72px 0 40px; border-bottom: 1px solid var(--line); }
+  h1 { margin: 0 0 10px; font-size: 34px; letter-spacing: -.02em; }
+  .tag { color: var(--dim); font-size: 18px; margin: 0; }
+  h2 { margin: 44px 0 12px; font-size: 20px; letter-spacing: -.01em; }
+  p, li { color: var(--fg); }
+  .muted { color: var(--dim); }
+  a { color: var(--accent); }
+  .cta {
+    display: inline-block; margin: 28px 0 8px; padding: 13px 24px;
+    background: var(--accent); color: #fff; text-decoration: none;
+    border-radius: 8px; font-weight: 600;
+  }
+  .cta:hover { filter: brightness(1.1); }
+  .req { list-style: none; padding: 0; }
+  .req li { padding-left: 22px; position: relative; }
+  .req li::before { content: "→"; position: absolute; left: 0; color: var(--dim); }
+  pre {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 16px; overflow-x: auto;
+    font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  code { font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  p code, li code { background: var(--panel); padding: 1px 5px; border-radius: 4px; }
+  footer {
+    margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line);
+    color: var(--dim); font-size: 14px;
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Wavelink Mac</h1>
+    <p class="tag">The Wavelink Intercom app for macOS.</p>
+    <a class="cta" href="https://github.com/astorms44/wavelink-mac-releases/releases/latest">Download the latest release</a>
+    <p class="muted" style="font-size:14px">Signed and notarized. This site distributes build
+      artifacts only — the Wavelink Intercom source is not public. Looking for the server?
+      <a href="https://astorms44.github.io/wavelink-releases/">Server releases are here.</a></p>
+  </header>
+
+  <h2>Requirements</h2>
+  <ul class="req">
+    <li>macOS 26 or later, Apple Silicon or Intel</li>
+    <li>A Wavelink Intercom server to sign in to, and a login from its administrator</li>
+  </ul>
+
+  <h2>Installing</h2>
+  <p>Download the <code>.dmg</code>, open it and drag <strong>Wavelink Mac</strong> to Applications.
+    On first launch macOS asks for microphone access — allow it, or you'll listen but not talk.</p>
+  <p>Each release also carries a <code>.pkg</code>. That's the file the app's own updater installs;
+    you can also open it by hand or push it with MDM. If the app is running, the installer quits it
+    first and reopens it afterwards.</p>
+
+  <h2>Updates</h2>
+  <p>The app updates itself from this channel. It checks every six hours and tells you when a new
+    version is out — in the menu-bar dropdown, with a download arrow in the toolbar, and in
+    <strong>Settings → Updates</strong>, where the release notes sit next to the Update button.</p>
+  <p>It never installs on its own. <strong>Update</strong> downloads the package, verifies it three
+    ways — SHA-256 against the manifest, the Developer ID Installer signature, and Gatekeeper's
+    notarization verdict — then asks once for an administrator password. You drop off the intercom
+    for the length of the install, so update between shows.</p>
+
+  <h2>Verifying a download yourself</h2>
+<pre><code>shasum -a 256 WavelinkMac-*.pkg
+pkgutil --check-signature WavelinkMac-*.pkg
+spctl -a -t install -vv WavelinkMac-*.pkg</code></pre>
+  <p class="muted">Expect <code>Developer ID Installer: Austin Storms (A8UR75UJ6Q)</code> and
+    <code>accepted</code>. Compare the hash against the release's
+    <a href="https://github.com/astorms44/wavelink-mac-releases/releases/latest/download/mac-manifest.json">mac-manifest.json</a>.</p>
+
+  <footer>© Austin Storms / Storms Audio. All rights reserved.</footer>
+</main>
+</body>
+</html>

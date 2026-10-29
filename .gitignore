@@ -1,0 +1,5 @@
+# Installers live as GitHub Release assets, never in the repo — a .pkg per build
+# would bloat the clone permanently and git can't ever forget it.
+*.pkg
+*.dmg
+.DS_Store
